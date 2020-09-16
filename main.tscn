@@ -8,12 +8,12 @@ extents = Vector3( 10, 1, 10 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 20, 2, 20 )
 
+[sub_resource type="CapsuleShape" id=5]
+
 [sub_resource type="CubeMesh" id=3]
 size = Vector3( 1, 1, 1 )
 
 [sub_resource type="CapsuleMesh" id=4]
-
-[sub_resource type="CapsuleShape" id=5]
 
 [node name="Spatial" type="Spatial"]
 
@@ -23,34 +23,41 @@ size = Vector3( 1, 1, 1 )
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0129251, 2.38419e-07, 0.00753736 )
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="player" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.88496, 0 )
+[node name="player" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+mode = 2
+can_sleep = false
 script = ExtResource( 1 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.720749, -4.8756e-08, 1.11541 )
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="MeshInstance" type="MeshInstance" parent="player"]
-mesh = SubResource( 4 )
-material/0 = null
-
 [node name="CollisionShape" type="CollisionShape" parent="player"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
 shape = SubResource( 5 )
 
 [node name="CameraBase" type="Spatial" parent="player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
 [node name="CameraRot" type="Spatial" parent="player/CameraBase"]
 
 [node name="SpringArm" type="SpringArm" parent="player/CameraBase/CameraRot"]
-transform = Transform( -1.13133e-08, 0.258819, -0.965926, -1, -8.59334e-08, -1.13133e-08, -8.59334e-08, 0.965926, 0.258819, 5.96046e-08, 1.13687e-13, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96046e-08, 1.13687e-13, 0 )
 collision_mask = 511
 spring_length = 10.0
 
 [node name="Camera" type="Camera" parent="player/CameraBase/CameraRot/SpringArm"]
 current = true
+
+[node name="UnitPivot" type="Spatial" parent="player"]
+
+[node name="MeshInstance2" type="MeshInstance" parent="player/UnitPivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0900477, 0.464318, -1.05063 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="MeshInstance" type="MeshInstance" parent="player/UnitPivot"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = SubResource( 4 )
+material/0 = null
